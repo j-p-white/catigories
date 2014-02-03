@@ -1,0 +1,2 @@
+<head> i want this word </head> 
+<body> and these words, <p> and these</p> this as well</body> 
