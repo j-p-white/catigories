@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -16,6 +17,8 @@ public class regexReader {
 	static boolean start;
 	static boolean end;
 	static boolean garbage;
+	static boolean metaBool;
+	static ArrayList<String> sift = new ArrayList<String>();
 	
 	// read in the file and check for regex
 	public static void readFile() throws IOException{
@@ -23,37 +26,37 @@ public class regexReader {
 
 	  BufferedReader in = new BufferedReader(new InputStreamReader(economy1.openStream()));
 try {
-	Pattern startPattern = Pattern.compile("^[<p>]");
-	Pattern endPattern = Pattern.compile("[</p>]$");
-	Pattern p = Pattern.compile("[<a-zA-Z/.]*?>");
+	//Pattern startPattern = Pattern.compile("^[<p>]*");
+	//Pattern endPattern = Pattern.compile("[</p>]$*");
+	//Pattern p = Pattern.compile("\s<[a-zA-Z\/][^>]*>\\g");
+	//Pattern meta = Pattern.compile("[<metadata/^<]*?>");
 	
 	//while  information 
 	while((line = in.readLine())!= null){
-		Matcher match = startPattern.matcher(line);
-		Matcher endmatch = endPattern.matcher(line);
-		Matcher gmatch = p.matcher(line);
-		start = match.find();
-		end = endmatch.find();
-		garbage = gmatch.find();
+		StringTokenizer tok = new StringTokenizer(line);
+		//Matcher match = startPattern.matcher(line);
+		//Matcher endmatch = endPattern.matcher(line);
+		//Matcher gmatch = p.matcher(line);
+		//Matcher metaMatch = meta.matcher(line);
+	//	start = match.find();
+		//end = endmatch.find();
+	//	garbage = gmatch.find();
+		//metaBool = metaMatch.find();
 		
-	 
+		
+	System.out.println(	line.replaceAll("<[^>]*>", "").trim());
+		
+	 /*
 		//if the pattern matches <p>
-		if(start){
-			StringTokenizer tok = new StringTokenizer(line);
+		if(!garbage){
+			
 			//while the 2nd pattern is not </p> and has more elements 
-			while(!end && tok.hasMoreElements()){	
-					
-				// if symbols are [< a-z/.>] ignore them 
-				if(garbage){
-					
-				}
-				//else print out the tokens
-				else{
-						System.out.println(tok.nextElement());
-				}
-					
+			while(tok.hasMoreElements()){	
+				//else print out the tokens			
+						sift.add(tok.nextToken());	
 		 }//end while
 	 }//end if
+	*/
 	}// end while 
 	
 	
@@ -64,7 +67,28 @@ try {
 		  catch(NoSuchElementException e){
 			  e.printStackTrace();
 		}
+
+		for(String g:sift){
+			System.out.println(g);
+		}
 	}// end readFile
+	
+	
+	public static void removeBadTokens(ArrayList<String> sift){
+		String s;
+		System.out.println("sift size is: "+ sift.size());
+		for(int i =0; i < sift.size();i++){
+			System.out.println(i);
+			s = sift.get(i);
+			s.replaceAll("<.", "");
+			sift.add(i,s);
+		}//end for
+		
+		for(String g:sift){
+			System.out.println(g);
+		}
+	}// end method
+	
 	
 	
 	public static void main(String[] args){
@@ -73,7 +97,8 @@ try {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-	}
+			}//end catch 
+		//	removeBadTokens(sift);
+	}// end main
 	
 }
