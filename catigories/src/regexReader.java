@@ -18,11 +18,12 @@ public class regexReader {
 	static boolean end;
 	static boolean garbage;
 	static boolean metaBool;
-	static ArrayList<String> sift = new ArrayList<String>();
+	static Set<String> sift;
+    URL news1; 
 	
 	// read in the file and check for regex
 	public static void readFile() throws IOException{
-	  URL economy1 = new URL("http://www.nytimes.com");
+	  news1 = new URL("http://www.nytimes.com");
 
 	  BufferedReader in = new BufferedReader(new InputStreamReader(economy1.openStream()));
 try {
