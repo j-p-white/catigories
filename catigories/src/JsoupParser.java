@@ -1,4 +1,10 @@
-import java.io.IOException; 
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.File; 
+
+import java.util.Random;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
@@ -6,26 +12,93 @@ import org.jsoup.nodes.Document;
 public class JsoupParser {
 	
 	public static void main(String [] args){
-		Document doc; 
-		String bodyText;
+		
+		Scanner scan;
+		String url;
+		File zombieFile = new File("zombieUrl.txt");
+		File spaceFile = new File("spaceUrl.txt");
+		File scienceFile = new File("scienceUrl.txt");
+		String[] fileWords;
+		WebPage<String> p;
+		ArrayList<WebPage> science = new ArrayList<WebPage>(); 
+		ArrayList<WebPage> space = new ArrayList<WebPage>(); 
+		ArrayList<WebPage> zombies = new ArrayList<WebPage>();
+		
+		
+		int count = 0;
+		
 		try{ 
-			//get the url
-			doc = Jsoup.connect("http://www.nytimes.com/2014/02/04/science/blazing-trails-in-brain-science.html?ref=science&_r=0").get();
-			
-				// get the body text
-				bodyText = doc.body().text();
+			while(count <=15){
+				if(count <= 5){
+					scan = new Scanner(zombieFile);
+					while(scan.hasNextLine()){
+						url = scan.nextLine();
+						//parse the url
+					fileWords = JsoupParsing(url);
+					
+					p = new WebPage<String>(addWordsToBst(fileWords),url);
+					zombies.add(p); //add that page to the category arraylist
+					
+					count++;	
+					}//end scanner while
+					scan.close();
+				}//end if 5
 				
-				//replace all not text charecters 
-		String[] myList = bodyText.split("[^a-zA-Z0-9']+");
+				else if(count >5 && count <=10){
+					scan = new Scanner(spaceFile);
+					while(scan.hasNextLine()){
+						url = scan.nextLine(); 
+						
+						fileWords = JsoupParsing(url);
+						
+						p = new WebPage<String>(addWordsToBst(fileWords),url);
+						space.add(p);
+						
+						count++;
+					}//end while
+					scan.close();
+				}//end if greater then 5 and less then 10
 				
-			for(int i =0; i < myList.length;i++){
-				System.out.println(myList[i]);
-			}
-			
+			}//end while
 		}//end try
 		catch(IOException e){
 			e.printStackTrace();
 		}
-		
 	}//end main
+	
+	public static String[] JsoupParsing(String url) throws IOException{
+		Document doc;
+		String bodyText;
+		
+		//get the url
+		doc = Jsoup.connect(url).get();
+		
+		// get the body text
+		bodyText = doc.body().text();
+			
+	//replace all not text characters 
+	String[] myList = bodyText.split("[^a-zA-Z0-9']+");
+	return myList;
+	
+	}// end JsoupParsing 
+	
+	public static BasicBST addWordsToBst(String[] myWords){
+		Random rand = new Random();
+		BasicBST<String> bst = new BasicBST<String>();
+		String zombieFileWord;
+		for(String s:myWords){
+			//pick a random word from the list
+			zombieFileWord= myWords[rand.nextInt(myWords.length)];
+			
+			System.out.println(zombieFileWord);
+			
+			//add the words to the page object/bst
+			bst.insert(zombieFileWord);
+		}//end for
+		
+		return bst;
+		
+	}// end addWordsToBst
+	
+	
 }//end class
