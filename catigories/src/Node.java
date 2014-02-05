@@ -3,14 +3,19 @@ public class Node<T extends Comparable<T>>{
 
 	Node<T> left,right,parent; 
 	int weight; 
-	String url; 
+	T word; 
 	
 	public Node(){
 		
 	}//end empty constructor
 	
-	public Node(String name, int numb){
-		url = name; 
+	public Node(T name, int numb){
+		word = name; 
 		weight = numb;
-	}//end constructor
+	}
+	
+	public Node(T name){
+		word = name;
+	}
+	
 }//end class
