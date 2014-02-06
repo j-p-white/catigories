@@ -1,20 +1,26 @@
 import java.awt.*; 
+
 import javax.swing.*;
+
 import java.awt.event.*;
 
 public class guiPage extends JPanel implements ActionListener { 
 
-protected JTextField textField;
-JLabel categories,scores;  
+JTextField textField;
+JLabel categories,scores;
+JButton button;
+String text;
 
 //set up the panel
 public guiPage(){ 
+	button = new JButton("start");
   setLayout(new BorderLayout());
   scores = new JLabel("SCORES    ");
-  categories = new JLabel("world Travel: "+"  "+
-                          "computer parts: "+"  "+
-                          " economy: ");
+  categories = new JLabel("Space: "+"  "+
+                          "Science: "+"  "+
+                          "Zombies: ");
 
+ // button.setVerticalAlignment(JButton.SOUTH_EAST);
   scores.setVerticalAlignment(JLabel.NORTH);
   categories.setVerticalAlignment(JLabel.NORTH);
 
@@ -24,12 +30,23 @@ public guiPage(){
   add(textField,BorderLayout.NORTH);  
   add(scores,BorderLayout.WEST);
   add(categories,BorderLayout.CENTER);
+  add(button,BorderLayout.SOUTH);
+  
+  button.addActionListener(new ActionListener(){
+  public void actionPerformed(ActionEvent evt) {
+      text = textField.getText();
+      
+      System.out.println("we have liftoff!");
+      
+  }
+  });  
 }//end constructor
 
-    public void actionPerformed(ActionEvent evt) {
-        String text = textField.getText();
-        textField.selectAll();
-    }
+public String getTextFieldValue(){
+	return text;
+}
+
+
 
 //set up the frame and display frame
 private static void createAndShowGUI() { 
@@ -52,4 +69,9 @@ frame.setVisible(true);
              } //end run
           });//end new runnable
       }//end main
+
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 } // end class

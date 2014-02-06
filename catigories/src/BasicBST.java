@@ -3,7 +3,7 @@ public class BasicBST <T extends Comparable<T>>   {
 	 NaturalComparator<T> ordering = new NaturalComparator<T>();
 	  
 	 Node<T> rootnode; // is used every where
-	 int score;
+	 int treeScore;
 	 boolean userSearch;
 	 
 	 //Node<T> delCurrent; // in use in delete method 
@@ -104,7 +104,7 @@ public class BasicBST <T extends Comparable<T>>   {
 					temp.weight++;
 				}
 				else{
-				    score = score + temp.weight;	
+				    treeScore = treeScore + temp.weight;	
 				}
 				  return true; 	
 			 }

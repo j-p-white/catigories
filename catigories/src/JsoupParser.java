@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.File; 
 
 import java.util.Random;
@@ -11,7 +10,11 @@ import org.jsoup.nodes.Document;
 
 public class JsoupParser {
 	
-	public static void main(String [] args){
+	ArrayList<WebPage> science = new ArrayList<WebPage>(); 
+	ArrayList<WebPage> space = new ArrayList<WebPage>(); 
+	ArrayList<WebPage> zombies = new ArrayList<WebPage>();
+	
+	public void readInFiles(){ //make this line main to test again
 		
 		Scanner scan;
 		String url;
@@ -20,9 +23,7 @@ public class JsoupParser {
 		File scienceFile = new File("scienceUrl.txt");
 		String[] fileWords;
 		WebPage<String> p;
-		ArrayList<WebPage> science = new ArrayList<WebPage>(); 
-		ArrayList<WebPage> space = new ArrayList<WebPage>(); 
-		ArrayList<WebPage> zombies = new ArrayList<WebPage>();
+
 		
 		
 		int count = 0;
@@ -42,8 +43,7 @@ public class JsoupParser {
 					count++;	
 					}//end scanner while
 					scan.close();
-				}//end if 5
-				
+				}//end if 5				
 				else if(count >5 && count <=10){
 					scan = new Scanner(spaceFile);
 					while(scan.hasNextLine()){
@@ -58,14 +58,26 @@ public class JsoupParser {
 					}//end while
 					scan.close();
 				}//end if greater then 5 and less then 10
-				
+				else{
+					scan = new Scanner(scienceFile);
+					while(scan.hasNextLine()){
+						url = scan.nextLine();
+						
+						fileWords = JsoupParsing(url);
+						
+						p = new WebPage<String>(addWordsToBst(fileWords),url);
+						science.add(p);
+						
+						count++;
+					}// end while
+					scan.close();
+				}//end else (greater then 10)
 			}//end while
 		}//end try
 		catch(IOException e){
 			e.printStackTrace();
 		}
 	}//end main
-	
 	public static String[] JsoupParsing(String url) throws IOException{
 		Document doc;
 		String bodyText;
@@ -79,7 +91,6 @@ public class JsoupParser {
 	//replace all not text characters 
 	String[] myList = bodyText.split("[^a-zA-Z0-9']+");
 	return myList;
-	
 	}// end JsoupParsing 
 	
 	public static BasicBST addWordsToBst(String[] myWords){
@@ -95,10 +106,16 @@ public class JsoupParser {
 			//add the words to the page object/bst
 			bst.insert(zombieFileWord);
 		}//end for
-		
 		return bst;
-		
 	}// end addWordsToBst
 	
-	
+	public ArrayList<WebPage> getZombies(){
+		return zombies;
+	}
+	public ArrayList<WebPage> getSpace(){
+		return space;
+	}
+	public ArrayList<WebPage> getScience(){
+		return science;
+	}
 }//end class
