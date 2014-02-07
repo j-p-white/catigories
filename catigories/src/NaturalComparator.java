@@ -1,6 +1,14 @@
 
 import java.util.Comparator;
-
+/*
+ * Classname
+ * 
+ * Version information
+ *
+ * Date
+ * 
+ * Copyright notice
+ */
 class NaturalComparator<T extends Comparable<T>> implements Comparator<T>
 	{
 		public int compare(T a,T b){

@@ -7,7 +7,15 @@ import java.util.ArrayList;
 
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
-
+/*
+ * Classname
+ * 
+ * Version information
+ *
+ * Date
+ * 
+ * Copyright notice
+ */
 public class JsoupParser {
 	
 	ArrayList<WebPage> science = new ArrayList<WebPage>(); 
@@ -38,6 +46,10 @@ public class JsoupParser {
 					fileWords = JsoupParsing(url);
 					
 					p = new WebPage<String>(addWordsToBst(fileWords),url);
+					//change the boolean value 
+					 p.pageWords.setBoolean(true);
+					
+					
 					zombies.add(p); //add that page to the category arraylist
 					
 					count++;	
@@ -52,6 +64,8 @@ public class JsoupParser {
 						fileWords = JsoupParsing(url);
 						
 						p = new WebPage<String>(addWordsToBst(fileWords),url);
+						//change the boolean value 
+						 p.pageWords.setBoolean(true);
 						space.add(p);
 						
 						count++;
@@ -66,6 +80,8 @@ public class JsoupParser {
 						fileWords = JsoupParsing(url);
 						
 						p = new WebPage<String>(addWordsToBst(fileWords),url);
+						//change the boolean value 
+						 p.pageWords.setBoolean(true);
 						science.add(p);
 						
 						count++;

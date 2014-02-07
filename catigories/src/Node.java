@@ -1,4 +1,12 @@
-
+/*
+ * Classname
+ * 
+ * Version information
+ *
+ * Date
+ * 
+ * Copyright notice
+ */
 public class Node<T extends Comparable<T>>{
 
 	Node<T> left,right,parent; 

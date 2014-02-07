@@ -3,16 +3,27 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.awt.event.*;
-
-public class guiPage extends JPanel implements ActionListener { 
+import java.io.IOException;
+/*
+ * Classname
+ * 
+ * Version information
+ *
+ * Date
+ * 
+ * Copyright notice
+ */
+public class GuiPage extends JPanel implements ActionListener { 
 
 JTextField textField;
 JLabel categories,scores;
 JButton button;
 String text;
+JsoupParser parser = new JsoupParser();
+Execution e = new Execution();
 
 //set up the panel
-public guiPage(){ 
+public GuiPage(){ 
 	button = new JButton("start");
   setLayout(new BorderLayout());
   scores = new JLabel("SCORES    ");
@@ -35,6 +46,13 @@ public guiPage(){
   button.addActionListener(new ActionListener(){
   public void actionPerformed(ActionEvent evt) {
       text = textField.getText();
+      try {
+    	  //get the users words and set them
+		e.setUserWords(parser.JsoupParsing(text));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
       
       System.out.println("we have liftoff!");
       
@@ -55,20 +73,20 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setSize(400,200);
 
 //add panel to frame 
-  frame.add(new guiPage());
+  frame.add(new GuiPage());
 
 //frame.pack();
 frame.setVisible(true);
 }//end creatAndShow
 
 //run the program
-    public static void main(String[] args) {
+    public void runGui() {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
              } //end run
           });//end new runnable
-      }//end main
+      }//end runGui
 
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

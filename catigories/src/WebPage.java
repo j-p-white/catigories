@@ -1,4 +1,12 @@
-
+/*
+ * Classname
+ * 
+ * Version information
+ *
+ * Date
+ * 
+ * Copyright notice
+ */
 public class WebPage<T>{
 	
 	BasicBST<String> pageWords;

@@ -1,4 +1,12 @@
-
+/*
+ * Classname
+ * 
+ * Version information
+ *
+ * Date
+ * 
+ * Copyright notice
+ */
 public class BasicBST <T extends Comparable<T>>   {
 	 NaturalComparator<T> ordering = new NaturalComparator<T>();
 	  
@@ -18,6 +26,14 @@ public class BasicBST <T extends Comparable<T>>   {
 			this.rootnode = node;
 		}//end BST constructor
 	  
+		public void setBoolean(boolean b){
+			userSearch = b;
+		}//end setBool
+		
+		public int getScore(){
+			return treeScore;
+		}//end getScore method
+		
 	  //this string seems to place the file in the proper spot and with the right ending... use it! 
 	  String file = System.getProperty("user.home")+ System.getProperty("file.separator")+ ".bstrc";
 	  
@@ -117,4 +133,5 @@ public class BasicBST <T extends Comparable<T>>   {
 				return(search(temp.right,val)); 
 			 }  
 		}// end search
+		
 }//end class
