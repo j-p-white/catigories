@@ -1,13 +1,13 @@
 
 import java.util.Comparator;
 /*
- * Classname
+ * Classname:BasicBST
  * 
- * Version information
+ * Version information: 1
  *
- * Date
+ * Date: 2/9/2014
  * 
- * Copyright notice
+ * Copyright notice: none
  */
 class NaturalComparator<T extends Comparable<T>> implements Comparator<T>
 	{

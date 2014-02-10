@@ -1,16 +1,16 @@
 /*
- * Classname
+ * Classname:BasicBST
  * 
- * Version information
+ * Version information: 1
  *
- * Date
+ * Date: 2/9/2014
  * 
- * Copyright notice
+ * Copyright notice: none
  */
 public class Node<T extends Comparable<T>>{
 
 	Node<T> left,right,parent; 
-	int weight; 
+	int weight = 1; 
 	T word; 
 	
 	public Node(){

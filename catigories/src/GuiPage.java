@@ -4,14 +4,15 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
 /*
- * Classname
+ * Classname:BasicBST
  * 
- * Version information
+ * Version information: 1
  *
- * Date
+ * Date: 2/9/2014
  * 
- * Copyright notice
+ * Copyright notice: none
  */
 public class GuiPage extends JPanel implements ActionListener { 
 
@@ -20,7 +21,9 @@ JLabel categories,scores;
 JButton button;
 String text;
 JsoupParser parser = new JsoupParser();
-Execution e = new Execution();
+int zombieScore; 
+int spaceScore; 
+int scienceScore; 
 
 //set up the panel
 public GuiPage(){ 
@@ -48,13 +51,16 @@ public GuiPage(){
       text = textField.getText();
       try {
     	  //get the users words and set them
-		e.setUserWords(parser.JsoupParsing(text));
+    	//  scoreCategories(parser.JsoupParsing(text),parser.getScience());
+    	//scoreCategories(parser.JsoupParsing(text),parser.getSpace());
+    	  scoreCategories(parser.JsoupParsing(text),parser.getZombies());
+		
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
       
-      System.out.println("we have liftoff!");
+      System.out.println("zombieScore: "+zombieScore);
       
   }
   });  
@@ -92,4 +98,19 @@ frame.setVisible(true);
 		// TODO Auto-generated method stub
 		
 	}
+	public static void scoreCategories(String[] DLwords,ArrayList<WebPage<String>> categorie){
+	int catScore = 0;
+		for(WebPage<String> p: categorie){
+			p.pageWords.setBoolean(true);
+			for(String s:DLwords){
+				p.pageWords.find(s);
+				catScore += p.pageWords.getScore();
+				System.out.println(catScore);
+			}//end DLwords for
+		}//end categories for
+	 // return catScore;
+	}// end method
+	
+	
+	
 } // end class

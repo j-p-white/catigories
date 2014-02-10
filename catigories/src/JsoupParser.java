@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.File; 
-
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -8,19 +7,19 @@ import java.util.ArrayList;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 /*
- * Classname
+ * Classname:BasicBST
  * 
- * Version information
+ * Version information: 1
  *
- * Date
+ * Date: 2/9/2014
  * 
- * Copyright notice
+ * Copyright notice: none
  */
 public class JsoupParser {
 	
-	ArrayList<WebPage> science = new ArrayList<WebPage>(); 
-	ArrayList<WebPage> space = new ArrayList<WebPage>(); 
-	ArrayList<WebPage> zombies = new ArrayList<WebPage>();
+	ArrayList<WebPage<String>> science = new ArrayList<WebPage<String>>(); 
+	ArrayList<WebPage<String>> space = new ArrayList<WebPage<String>>(); 
+	ArrayList<WebPage<String>> zombies = new ArrayList<WebPage<String>>();
 	
 	public void readInFiles(){ //make this line main to test again
 		
@@ -30,15 +29,10 @@ public class JsoupParser {
 		File spaceFile = new File("spaceUrl.txt");
 		File scienceFile = new File("scienceUrl.txt");
 		String[] fileWords;
-		WebPage<String> p;
-
-		
-		
-		int count = 0;
-		
+		WebPage<String> p = new WebPage<String>();
+		boolean endWhile = true;
 		try{ 
-			while(count <=15){
-				if(count <= 5){
+				if(zombies.size() <=0){
 					scan = new Scanner(zombieFile);
 					while(scan.hasNextLine()){
 						url = scan.nextLine();
@@ -46,55 +40,18 @@ public class JsoupParser {
 					fileWords = JsoupParsing(url);
 					
 					p = new WebPage<String>(addWordsToBst(fileWords),url);
-					//change the boolean value 
-					 p.pageWords.setBoolean(true);
-					
-					
 					zombies.add(p); //add that page to the category arraylist
-					
-					count++;	
+						
 					}//end scanner while
 					scan.close();
 				}//end if 5				
-				else if(count >5 && count <=10){
-					scan = new Scanner(spaceFile);
-					while(scan.hasNextLine()){
-						url = scan.nextLine(); 
-						
-						fileWords = JsoupParsing(url);
-						
-						p = new WebPage<String>(addWordsToBst(fileWords),url);
-						//change the boolean value 
-						 p.pageWords.setBoolean(true);
-						space.add(p);
-						
-						count++;
-					}//end while
-					scan.close();
-				}//end if greater then 5 and less then 10
-				else{
-					scan = new Scanner(scienceFile);
-					while(scan.hasNextLine()){
-						url = scan.nextLine();
-						
-						fileWords = JsoupParsing(url);
-						
-						p = new WebPage<String>(addWordsToBst(fileWords),url);
-						//change the boolean value 
-						 p.pageWords.setBoolean(true);
-						science.add(p);
-						
-						count++;
-					}// end while
-					scan.close();
-				}//end else (greater then 10)
-			}//end while
 		}//end try
 		catch(IOException e){
 			e.printStackTrace();
 		}
-	}//end main
-	public static String[] JsoupParsing(String url) throws IOException{
+	}//end readInFile
+	
+	public String[] JsoupParsing(String url) throws IOException{
 		Document doc;
 		String bodyText;
 		
@@ -103,35 +60,41 @@ public class JsoupParser {
 		
 		// get the body text
 		bodyText = doc.body().text();
+		
+		bodyText.toLowerCase();
 			
 	//replace all not text characters 
 	String[] myList = bodyText.split("[^a-zA-Z0-9']+");
 	return myList;
 	}// end JsoupParsing 
 	
-	public static BasicBST addWordsToBst(String[] myWords){
+	public static BasicBST<String> addWordsToBst(String[] myWords){
 		Random rand = new Random();
 		BasicBST<String> bst = new BasicBST<String>();
-		String zombieFileWord;
+		String fileWord;
 		for(String s:myWords){
 			//pick a random word from the list
-			zombieFileWord= myWords[rand.nextInt(myWords.length)];
+			fileWord= myWords[rand.nextInt(myWords.length)];
 			
-			System.out.println(zombieFileWord);
+			System.out.println(fileWord);
 			
 			//add the words to the page object/bst
-			bst.insert(zombieFileWord);
+			bst.insert(fileWord.toLowerCase());
 		}//end for
 		return bst;
 	}// end addWordsToBst
 	
-	public ArrayList<WebPage> getZombies(){
+	public ArrayList<WebPage<String>> getZombies(){
 		return zombies;
 	}
-	public ArrayList<WebPage> getSpace(){
+	
+	
+	public ArrayList<WebPage<String>> getSpace(){
 		return space;
 	}
-	public ArrayList<WebPage> getScience(){
+	
+	
+	public ArrayList<WebPage<String>> getScience(){
 		return science;
 	}
 }//end class

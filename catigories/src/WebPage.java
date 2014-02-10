@@ -1,33 +1,24 @@
 /*
- * Classname
+ * Classname:BasicBST
  * 
- * Version information
+ * Version information: 1
  *
- * Date
+ * Date: 2/9/2014
  * 
- * Copyright notice
+ * Copyright notice: none
  */
 public class WebPage<T>{
 	
-	BasicBST<String> pageWords;
+	BasicBST<String> pageWords = new BasicBST<String>();
 	String websiteName; 
 	
 	public WebPage(BasicBST<String> bst,String url){
 		pageWords = bst; 
 		websiteName = url;
-		
 	}//end basic webpage 
 	
 	public WebPage(){
 		
 	}// end empty constructor
-	
-	public WebPage(String word){
-		
-	}
-	
-	public void setwebsiteName(String url){
-		websiteName = url;
-	}
 	
 }//end class

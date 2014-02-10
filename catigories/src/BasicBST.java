@@ -1,18 +1,19 @@
 /*
- * Classname
  * 
- * Version information
+ * Classname:BasicBST
+ * 
+ * Version information: 1
  *
- * Date
+ * Date: 2/9/2014
  * 
- * Copyright notice
+ * Copyright notice: none
  */
 public class BasicBST <T extends Comparable<T>>   {
 	 NaturalComparator<T> ordering = new NaturalComparator<T>();
 	  
 	 Node<T> rootnode; // is used every where
 	 int treeScore;
-	 boolean userSearch;
+	 boolean userSearch = false;
 	 
 	 //Node<T> delCurrent; // in use in delete method 
 	  
@@ -33,9 +34,6 @@ public class BasicBST <T extends Comparable<T>>   {
 		public int getScore(){
 			return treeScore;
 		}//end getScore method
-		
-	  //this string seems to place the file in the proper spot and with the right ending... use it! 
-	  String file = System.getProperty("user.home")+ System.getProperty("file.separator")+ ".bstrc";
 	  
 	    public Node<T> getRootnode()
 		{
