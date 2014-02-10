@@ -11,12 +11,8 @@
 public class Execution {
 	static String [] usersWords;
 	public static void main(String[] args) {
-		//variables
-		JsoupParser parser = new JsoupParser(); 
 		GuiPage gui = new GuiPage();
 		
-		parser.readInFiles(); // run the parser 
-		gui.runGui(); // run the gui 
-	
+		gui.runGui(); // run the gui
 	}// end main
 }//end class

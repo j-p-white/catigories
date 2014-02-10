@@ -17,24 +17,26 @@ import java.util.ArrayList;
 public class GuiPage extends JPanel implements ActionListener { 
 
 JTextField textField;
-JLabel categories,scores;
+JLabel categories,scores,zombieL,spaceL,scienceL;
 JButton button;
 String text;
 JsoupParser parser = new JsoupParser();
-int zombieScore; 
-int spaceScore; 
-int scienceScore; 
+static Integer zombieScore; 
+static Integer spaceScore; 
+static Integer scienceScore; 
 
 //set up the panel
 public GuiPage(){ 
+	spaceL = new JLabel("0");
+	zombieL = new JLabel("0");
+	scienceL = new JLabel("0");
 	button = new JButton("start");
   setLayout(new BorderLayout());
   scores = new JLabel("SCORES    ");
-  categories = new JLabel("Space: "+"  "+
-                          "Science: "+"  "+
-                          "Zombies: ");
-
- // button.setVerticalAlignment(JButton.SOUTH_EAST);
+  categories = new JLabel("Space: "+" "+spaceL +
+                          "Science: "+" "+scienceL +
+                          "Zombies: "+zombieL);
+  
   scores.setVerticalAlignment(JLabel.NORTH);
   categories.setVerticalAlignment(JLabel.NORTH);
 
@@ -48,29 +50,22 @@ public GuiPage(){
   
   button.addActionListener(new ActionListener(){
   public void actionPerformed(ActionEvent evt) {
+	  parser.readInFiles();
       text = textField.getText();
       try {
     	  //get the users words and set them
-    	//  scoreCategories(parser.JsoupParsing(text),parser.getScience());
-    	//scoreCategories(parser.JsoupParsing(text),parser.getSpace());
-    	  scoreCategories(parser.JsoupParsing(text),parser.getZombies());
-		
+    	  zombieScore = scoreCategories(parser.JsoupParsing(text),parser.getZombies());
+    	  scienceScore = scoreCategories(parser.JsoupParsing(text),parser.getScience());
+    	  spaceScore = scoreCategories(parser.JsoupParsing(text),parser.getSpace());
+    	  
+    	 System.out.println("space: "+spaceScore+""+"zombie: "+zombieScore+" "+"science: "+scienceScore);
+    	  
 	} catch (IOException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-      
-      System.out.println("zombieScore: "+zombieScore);
-      
   }
   });  
 }//end constructor
-
-public String getTextFieldValue(){
-	return text;
-}
-
-
 
 //set up the frame and display frame
 private static void createAndShowGUI() { 
@@ -79,9 +74,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setSize(400,200);
 
 //add panel to frame 
-  frame.add(new GuiPage());
-
-//frame.pack();
+frame.add(new GuiPage());
 frame.setVisible(true);
 }//end creatAndShow
 
@@ -98,19 +91,17 @@ frame.setVisible(true);
 		// TODO Auto-generated method stub
 		
 	}
-	public static void scoreCategories(String[] DLwords,ArrayList<WebPage<String>> categorie){
+	public static int scoreCategories(String[] DLwords,ArrayList<WebPage<String>> categorie){
 	int catScore = 0;
 		for(WebPage<String> p: categorie){
 			p.pageWords.setBoolean(true);
 			for(String s:DLwords){
 				p.pageWords.find(s);
 				catScore += p.pageWords.getScore();
-				System.out.println(catScore);
 			}//end DLwords for
 		}//end categories for
-	 // return catScore;
+	 return catScore;
 	}// end method
-	
 	
 	
 } // end class

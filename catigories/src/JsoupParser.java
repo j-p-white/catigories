@@ -32,6 +32,7 @@ public class JsoupParser {
 		WebPage<String> p = new WebPage<String>();
 		boolean endWhile = true;
 		try{ 
+			while(endWhile){
 				if(zombies.size() <=0){
 					scan = new Scanner(zombieFile);
 					while(scan.hasNextLine()){
@@ -45,6 +46,32 @@ public class JsoupParser {
 					}//end scanner while
 					scan.close();
 				}//end if 5				
+				
+			 if(science.size() <=0){
+				 scan = new Scanner(scienceFile);
+				 while(scan.hasNextLine()){
+					 url = scan.nextLine();
+					 fileWords = JsoupParsing(url);
+					 
+					 p = new WebPage<String>(addWordsToBst(fileWords),url);
+					 science.add(p);
+				 }//end while
+				 scan.close();
+			 }// end science if
+			 
+			 if(space.size() <=0){
+				 scan = new Scanner(spaceFile);
+				 while(scan.hasNextLine()){
+					 url = scan.nextLine();
+					 fileWords = JsoupParsing(url);
+					 
+					 p = new WebPage<String>(addWordsToBst(fileWords),url);
+					 space.add(p);
+				 }//end while
+				 scan.close();
+				 endWhile = false;
+			 }// end space if
+			}// end while
 		}//end try
 		catch(IOException e){
 			e.printStackTrace();
