@@ -14,38 +14,44 @@ import java.util.ArrayList;
  * 
  * Copyright notice: none
  */
-public class GuiPage extends JPanel implements ActionListener { 
+public class GuiPage extends JPanel { 
 
 JTextField textField;
 JLabel categories,scores,zombieL,spaceL,scienceL;
 JButton button;
+JPanel results;
 String text;
 JsoupParser parser = new JsoupParser();
 static Integer zombieScore; 
 static Integer spaceScore; 
 static Integer scienceScore; 
 
+
+
 //set up the panel
 public GuiPage(){ 
+	results = new JPanel();
+	results.setLayout(new BorderLayout());
+	categories = new JLabel("categories");
+	scores = new JLabel("winning Url: ");
+	
+	  //set the specifics of that area
+	  categories.setVerticalAlignment(JLabel.NORTH);
+	  
+	  //add labels to panel one
+	  results.add(categories,BorderLayout.CENTER);
+	  results.add(scores,BorderLayout.CENTER);
+	
+	
+	 /*--------------------------- end panel one -----------------------*/ 
 	spaceL = new JLabel("0");
 	zombieL = new JLabel("0");
 	scienceL = new JLabel("0");
 	button = new JButton("start");
-  setLayout(new BorderLayout());
-  scores = new JLabel("SCORES    ");
-  categories = new JLabel("Space: "+" "+spaceL +
-                          "Science: "+" "+scienceL +
-                          "Zombies: "+zombieL);
+	textField = new JTextField("type your webpage here",20); 
+	setLayout(new BorderLayout());
   
-  scores.setVerticalAlignment(JLabel.NORTH);
-  categories.setVerticalAlignment(JLabel.NORTH);
-
-  textField = new JTextField("type your webpage here",20);
-  textField.addActionListener(this);   
-
   add(textField,BorderLayout.NORTH);  
-  add(scores,BorderLayout.WEST);
-  add(categories,BorderLayout.CENTER);
   add(button,BorderLayout.SOUTH);
   
   button.addActionListener(new ActionListener(){
@@ -70,6 +76,7 @@ public GuiPage(){
 //set up the frame and display frame
 private static void createAndShowGUI() { 
 JFrame frame = new JFrame("categories"); 
+frame.setLayout(new BorderLayout());
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setSize(400,200);
 
@@ -87,10 +94,6 @@ frame.setVisible(true);
           });//end new runnable
       }//end runGui
 
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 	public static int scoreCategories(String[] DLwords,ArrayList<WebPage<String>> categorie){
 	int catScore = 0;
 		for(WebPage<String> p: categorie){
@@ -102,6 +105,4 @@ frame.setVisible(true);
 		}//end categories for
 	 return catScore;
 	}// end method
-	
-	
 } // end class
