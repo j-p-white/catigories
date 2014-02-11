@@ -17,7 +17,10 @@ import java.util.ArrayList;
 public class GuiPage { 
 
 static JTextField textField;
-JLabel categories,scores,zombieL,spaceL,scienceL;
+static JLabel categories,scores;
+static JLabel zombieL;
+static JLabel spaceL;
+static JLabel scienceL;
 static JButton button;
 static JPanel results = new JPanel();
 String text;
@@ -27,6 +30,8 @@ static Integer spaceScore;
 static Integer scienceScore; 
 
 public static void createPane(Container frame){
+	int xVal = 2; // controls 1st half of labels
+	int xVal2 = 0;//
 	results.setSize(400,200);
 	results.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 	results.setLayout(new GridBagLayout());
@@ -35,16 +40,46 @@ public static void createPane(Container frame){
 	
 	button = new JButton("start"); 
 	c.weightx = 0.5; // half the column
-	c.gridx = 2; // left
-	c.gridy = 2;//bottom row 
+	c.gridx = 4; // left
+	c.gridy = 4;//bottom row 
 	results.add(button,c);
 	
 	textField = new JTextField("type your webpage here");
-	c.gridx = 2; //left
+	c.gridx = xVal; //left
 	c.gridy = 0; // top
+	c.ipadx = 3; // make it wide
 	c.gridwidth = 3; // 3 columns long 
 	results.add(textField,c);
 	
+	zombieL = new JLabel("zombieScore: ");
+	c.gridx = xVal;//left 
+	c.gridy = 1;
+	c.weightx = 0.5; 
+	results.add(zombieL,c);
+	
+	spaceL = new JLabel("spaceScore: ");
+	c.gridx = xVal;//left 
+	c.gridy = 2;
+	c.weightx = 0.5; 
+	results.add(spaceL,c);
+	
+	scienceL = new JLabel("scienceScore: ");
+	c.gridx = xVal;//left 
+	c.gridy = 3;
+	c.weightx = 0.5; 
+	results.add(scienceL,c);
+	
+	categories = new JLabel("winning Category: ");
+	c.gridx = xVal2; // right 
+	c.gridy = 1;// top
+	c.weightx = 0.5; 
+	results.add(categories,c);
+	
+	scores = new JLabel("winning URL: "); 
+	c.gridx = xVal2; 
+	c.gridy = 3; 
+	c.weightx = 0.5; 
+	results.add(scores,c);
 	
 }
 
