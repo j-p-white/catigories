@@ -107,6 +107,7 @@ public class BasicBST <T extends Comparable<T>>   {
 		}
 		private boolean search(Node<T> temp, T val)
 		{ 
+			treeScore = 0;
 			 if(temp==null)
 			 {
 				return false;

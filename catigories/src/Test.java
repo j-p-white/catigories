@@ -11,7 +11,7 @@ public class Test {
 		populatePageFromArray(); //a score is produced
 		testJsoupMethods(); // produced a score -score changes each time - that is a bug 
 		testJsoupRun(); // made a score for that category
-		
+		testScoreChanging();// check what the zombie page scores are
 		
 		
 	}//end main
@@ -114,7 +114,21 @@ public class Test {
 			}// end for
 		}
 		System.out.println("JsoupRunTest: "+score);
-		
-		
 	}// end JsoupRun
+public static void testScoreChanging(){
+	boolean quit = false;
+	boolean ButtonClick = true;
+	JsoupParser parser = new JsoupParser(); 
+	
+	parser.readInFiles();
+	
+	for (WebPage<String> p:parser.getZombies()){
+		System.out.println("Zombie page Scores: "+p.pageScore);	
+		
+	}//end for
+}//end method
+	
+	
+	
+	
 }//end text class

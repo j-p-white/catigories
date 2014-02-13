@@ -25,7 +25,7 @@ public class WebPage<T>{
 	}// end empty constructor
 	
 	public void setPageScore(int score){
-		pageScore = score;
+		pageScore += score;
 	}
 	
 }//end class

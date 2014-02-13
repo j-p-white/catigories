@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Copyright notice: none
  */
 public class GuiPage { 
-
+boolean buttonClick;
 static JTextField textField;
 static JLabel categories,scores;
 static JLabel zombieL;
@@ -25,11 +25,9 @@ static JButton button;
 static JPanel results = new JPanel();
 static String text;
 static JsoupParser parser = new JsoupParser();
-static Integer zombieScore; 
-static Integer spaceScore; 
-static Integer scienceScore; 
 
 public static void createPane(Container frame){
+	parser.readInFiles();
 	int xVal = 2; // controls 1st half of labels
 	int xVal2 = 0;//
 	int myIpadx = 80;
@@ -47,9 +45,12 @@ public static void createPane(Container frame){
 	
 	button.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent evt) {
-		  parser.readInFiles();
+			 Integer zombieScore; 
+			 Integer spaceScore; 
+			 Integer scienceScore; 
 		  text = textField.getText();
 		  try {
+			 
 			  //get the users words and set them
 			  zombieScore = scoreCategories(parser.JsoupParsing(text),parser.getZombies());
 			  scienceScore = scoreCategories(parser.JsoupParsing(text),parser.getScience());
@@ -59,8 +60,11 @@ public static void createPane(Container frame){
 			  spaceL.setText("spaceScore : "+ spaceScore.toString());
 			  scienceL.setText("sceinceScore is: "+ scienceScore.toString());
 			  categories.setText("winning Category: "+winnningCat(spaceScore,scienceScore,zombieScore));
-		
-			  		  
+			  
+			  zombieScore = new Integer(0);
+			  spaceScore = new Integer(0);
+			  scienceScore = new Integer(0);
+			  
 			  
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -138,18 +142,20 @@ frame.setVisible(true);
 
 	public static int scoreCategories(String[] DLwords,ArrayList<WebPage<String>> categorie){
 	int catScore = 0;
+	int count = 0;
 		for(WebPage<String> p: categorie){
 			p.pageWords.setBoolean(true);
 			for(String s:DLwords){
+				count++;
 				p.pageWords.find(s);
 				p.setPageScore(p.pageWords.getScore());
+				System.out.println("pageScore: "+p.pageWords.getScore());
+				System.out.println("count: "+count);
 				catScore += p.pageWords.getScore();
 			}//end DLwords for
 		}//end categories for
 	 return catScore;
 	}// end method
-	
-	//scores.setText("winning Url: "+ );
 	
 	public static String winnningCat(Integer spaceScore,Integer scienceScore, Integer zombieScore){
 		Integer winning = spaceScore;
@@ -180,5 +186,5 @@ frame.setVisible(true);
 			}//end  for
 		return pageUrl;
 	}
-	
+
 } // end class
